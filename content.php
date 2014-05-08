@@ -37,7 +37,15 @@
 		) :
 			?>
 
-			<?php the_excerpt(); ?>
+
+			<?php
+				/* Showing thumbnail using featured image, style="width:auto;" is required to override wp-image, although it is better to create new style.*/
+				if ( has_post_thumbnail() ) {
+					the_post_thumbnail('thumbnail', array('class' => 'alignleft', 'style' => 'width:auto;'));
+				}  
+
+				the_excerpt(); 
+			?>
 
 		<?php
 		else : ?>
