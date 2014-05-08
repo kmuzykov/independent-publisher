@@ -6,9 +6,6 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-	<?php if ( has_post_thumbnail() && ! independent_publisher_has_full_width_featured_image() ) : ?>
-		<?php the_post_thumbnail( array( 700, 700 ), array( 'itemprop' => 'image' ) ); ?>
-	<?php endif; ?>
 	<header class="entry-header">
 		<h2 class="entry-title-meta">
       <span class="entry-title-meta-author">
@@ -31,7 +28,14 @@
 	<!-- .entry-header -->
 
 	<div class="entry-content" itemprop="mainContentOfPage">
-		<?php the_content(); ?>
+		<?php
+			/* Added displaying a medium featured image, once again overriding stle because wp-post-image sets width to 100%, but better to create another style */
+			if ( has_post_thumbnail() ) {
+				the_post_thumbnail('medium', array('class' => 'alignleft', 'style' => 'width:auto;'));
+			}   
+			the_content(); 
+		?>
+		
 		<?php wp_link_pages(
 			array(
 				'before'           => '<div class="page-links-next-prev">',
